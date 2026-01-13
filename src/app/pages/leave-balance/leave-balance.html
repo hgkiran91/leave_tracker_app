@@ -1,0 +1,110 @@
+<!-- Leave Balance List (Card UI) -->
+<div class="container mt-4">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h5 class="mb-0">Leave Balances</h5>
+					<div>
+						<!-- Button to open modal (will be triggered by ViewChild in TS) -->
+						<button type="button" class="btn btn-primary" (click)="openModel()">
+							<i class="fa fa-plus-circle"></i> Add Balance
+						</button>
+					</div>
+				</div>
+				<div class="card-body overflow-y-auto">
+					<div class="row g-3" id="leaveBalanceCards">
+						<!-- Example card item (repeat for each record) -->
+						@for (item of leaveBalanceList; track $index) {
+						<div class="col-md-4">
+							<div class="card h-100">
+								<div class="card-body">
+									<h6 class="card-title mb-1">Employee Name: {{item.empName}}</h6>
+									<p class="mb-1 text-muted small">Leave Type: <strong>{{item.leaveType}}</strong></p>
+									<p class="mb-1">Count: <strong>{{item.count}}</strong></p>
+									<p class="mb-1 text-muted small">Updated: {{item.updatedDate | date: "dd-MM-yyyy"}}
+									</p>
+								</div>
+								<div class="card-footer bg-transparent d-flex justify-content-between">
+									<div>
+										<button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+											<i class="fa fa-edit"></i>
+										</button>
+										<button class="btn btn-sm btn-outline-danger" title="Delete">
+											<i class="fa fa-trash"></i>
+										</button>
+									</div>
+									<small class="text-muted">ID: {{item.empId}}</small>
+								</div>
+							</div>
+						</div>
+						<!-- End example card -->
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Bootstrap Modal (Form) -->
+<div class="modal" #formModel tabindex="-1" role="dialog" aria-labelledby="leaveModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="leaveModalLabel">Add / Edit Leave Balance</h5>
+				<button type="button" (click)="closeModel()" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="leaveBalanceForm">
+					<div class="mb-3">
+						<label class="form-label">Employee ID</label>
+						<!-- <input type="number" class="form-control form-control-sm" [(ngModel)]="newLeaveObj.empId"
+							name="empId" placeholder="Employee ID"> -->
+						<select class="form-select form-select-sm" [(ngModel)]="newLeaveObj.empId" name="empId">
+							<option value="">Select Employee Id</option>
+							@for (item of allEmployeeList$ | async; track $index) {
+								<option [value]="item.empId">{{item.empName}}</option>	
+							}
+						</select>
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Leave Type</label>
+						<select class="form-select form-select-sm" [(ngModel)]="newLeaveObj.leaveType" name="leaveType">
+							<option value="">Select leave type</option>
+							<option value="sickLeave">Sick Leave</option>
+							<option value="paidLeave">Paid Leave</option>
+						</select>
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Count</label>
+						<input type="number" class="form-control form-control-sm" [(ngModel)]="newLeaveObj.count"
+							name="count" placeholder="Number of days">
+					</div>
+					<!-- <div class="mb-3">
+						<label class="form-label">Updated Date</label>
+						<input type="date" class="form-control form-control-sm" [(ngModel)]="newLeaveObj.updatedDate"
+							name="updatedDate">
+					</div> -->
+					<!-- <div class="mb-3">
+						<label class="form-label">Updated By (User ID)</label>
+						<input type="number" class="form-control form-control-sm" [(ngModel)]="newLeaveObj.updateBy"
+							name="updateBy" placeholder="User ID">
+					</div> -->
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
+					(click)="closeModel()">Cancel</button>
+				<button type="button" class="btn btn-primary btn-sm" id="saveLeaveBalanceBtn" (click)="onSaveBalance()">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Notes:
+ - The modal is standard Bootstrap markup; it can be opened via ViewChild in the component TS by toggling the modal with Bootstrap's JS or using the Modal service.
+ - The card list area (`leaveBalanceCards`) is where the component should render the list of `newLeaveObj` records.
+ - Buttons and form fields include IDs/classes to bind event handlers in TypeScript; no Angular code is added here per request.
+ -->

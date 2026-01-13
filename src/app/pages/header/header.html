@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav [class.sidebar]="true" [class.sidebar-collapsed]="!sidebarOpen()">
+      <div class="sidebar-header">
+        <button class="btn btn-link toggle-btn" (click)="toggleSidebar()" title="Toggle Sidebar">
+          <i class="fa fa-bars"></i>
+        </button>
+        @if (role == 'Hr') {
+        <h3 class="sidebar-title" *ngIf="sidebarOpen()">HR Panel</h3>
+        } @else if (role == 'Admin') {
+        <h3 class="sidebar-title" *ngIf="sidebarOpen()">Admin Panel</h3>
+        } @else {
+        <h3 class="sidebar-title" *ngIf="sidebarOpen()">Employee Panel</h3>
+        }
+      </div>
+
+      <ul class="nav flex-column sidebar-nav">
+        <li class="nav-item">
+          <a routerLink="/dashboard" class="nav-link">
+            <i class="fa fa-home"></i>
+            <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+        @if (role == 'Hr') {
+        <li class="nav-item">
+          <a routerLink="/employee" class="nav-link">
+            <i class="fa fa-users"></i>
+            <span class="nav-text">Employee</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/balance" class="nav-link">
+            <i class="fa fa-balance-scale"></i>
+            <span class="nav-text">Leave Balance</span>
+          </a>
+        </li>
+        }
+        <li class="nav-item">
+          <a routerLink="/leave-request" class="nav-link">
+            <i class="fa fa-file-text"></i>
+            <span class="nav-text">Leave Request</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Sidebar Footer with User Info -->
+      <div class="sidebar-footer">
+        <div class="user-info" *ngIf="sidebarOpen()">
+          <div class="user-avatar">
+            <i class="fa fa-user-circle"></i>
+          </div>
+          <div class="user-details">
+            <p class="username">{{ username.toLocaleUpperCase() }}</p>
+            <small class="user-role">{{ role.toLocaleUpperCase() }}</small>
+          </div>
+        </div>
+        <button class="btn btn-danger btn-sm logout-btn" (click)="logout()" title="Logout">
+          <i class="fa fa-sign-out"></i>
+          <span class="logout-text" *ngIf="sidebarOpen()">Logout</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content" [class.sidebar-open]="sidebarOpen()">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

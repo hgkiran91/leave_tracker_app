@@ -1,0 +1,88 @@
+<!-- Dashboard Wrapper -->
+<div class="leave-dashboard">
+
+  <!-- Center Logo -->
+  <div class="text-center mb-4">
+    <div class="app-logo">
+      <i class="fa fa-calendar-check-o me-2"></i>
+      Leave Tracker App
+    </div>
+  </div>
+
+  <div class="row g-3">
+
+    <!-- Employee Info -->
+    <div class="col-12">
+      <div class="card employee-card">
+        <div class="card-body text-white">
+          <div class="d-flex align-items-center">
+            <i class="fa fa-user-circle fa-3x me-3"></i>
+            <div>
+              <h5 class="mb-1">{{ leaveBalanceData.empName }}</h5>
+              <small>
+                {{ leaveBalanceData.designation }} |
+                {{ leaveBalanceData.department }} |
+                ID: {{ leaveBalanceData.empId }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paid Leave -->
+    <div class="col-md-4">
+      <div class="card leave-card bg-success text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6>Paid Leave</h6>
+              <h3>{{ leaveBalanceData.leaveSummary.paidLeave.available }}</h3>
+              <small>Available</small>
+            </div>
+            <i class="fa fa-briefcase fa-2x"></i>
+          </div>
+          <hr>
+          <small>Taken: {{ leaveBalanceData.leaveSummary.paidLeave.taken }}</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sick Leave -->
+    <div class="col-md-4">
+      <div class="card leave-card bg-warning text-dark">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6>Sick Leave</h6>
+              <h3>{{ leaveBalanceData.leaveSummary.sickLeave.available }}</h3>
+              <small>Available</small>
+            </div>
+            <i class="fa fa-medkit fa-2x"></i>
+          </div>
+          <hr>
+          <small>Taken: {{ leaveBalanceData.leaveSummary.sickLeave.taken }}</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Leave -->
+    <div class="col-md-4">
+      <div class="card leave-card bg-dark text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6>Total Leave</h6>
+              <h3>{{ leaveBalanceData.leaveSummary.total.totalAvailable }}</h3>
+              <small>Available</small>
+            </div>
+            <i class="fa fa-chart-pie fa-2x"></i>
+          </div>
+          <hr>
+          <small>Taken: {{ leaveBalanceData.leaveSummary.total.totalTaken }}</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

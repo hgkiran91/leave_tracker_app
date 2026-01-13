@@ -1,0 +1,107 @@
+<div class="row g-3">
+
+    <!-- LEFT: Leave Data -->
+    <div class="col-7">
+        <div class="card">
+            <div class="card-header bg-warning fw-bold">
+                Leave Requests
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Sl</th>
+                            <th>Applied On</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Type</th>
+                            <th>Reason</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of leaveRequests; track $index) {
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ item.leaveDate | date: "dd-MMM-yy" }}</td>
+                            <td>{{ item.fromDate | date: "dd-MMM-yy"}}</td>
+                            <td>{{ item.toDate | date: "dd-MMM-yy"}}</td>
+                            <td>{{ item.leaveType | uppercase}}</td>
+                            <td>{{ item.reason }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-1">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+
+                        @if (leaveRequests.length === 0) {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">
+                                No records found
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Leave Form -->
+    <div class="col-5">
+        <div class="card">
+            <div class="card-header bg-warning fw-bold">
+                Leave Request Form
+            </div>
+
+            <div class="card-body">
+                <form>
+
+                    <div class="mb-3">
+                        <label class="form-label">From Date</label>
+                        <input type="date" class="form-control" [(ngModel)]="newLeaveRequest.fromDate" name="fromDate"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">To Date</label>
+                        <input type="date" class="form-control" [(ngModel)]="newLeaveRequest.toDate" name="toDate"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Leave Type</label>
+                        <select class="form-select" [(ngModel)]="newLeaveRequest.leaveType" name="leaveType" required>
+                            <option value="">Select leave type</option>
+                            <option value="sickLeave">Sick Leave</option>
+                            <option value="paidLeave">Paid Leave</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Reason</label>
+                        <textarea class="form-control" [(ngModel)]="newLeaveRequest.reason" name="reason"></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-success" (click)="onSaveLeave()">
+                            <i class="fa fa-save me-1"></i> Submit
+                        </button>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                            <button type="button" class="btn btn-outline-danger">Cancel</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
